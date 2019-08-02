@@ -1,0 +1,54 @@
+﻿@model TodoMVC.Web.ViewModels.ToDoMvcViewModel
+@{
+    ViewBag.Title = "Index";
+    var status = ViewBag.Status;
+}
+
+
+<div class="header">
+    <h2>My To Do List</h2>
+    @using (Html.BeginForm("Add", "ToDoMvc", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+
+        @Html.TextBoxFor(model => model.Description, new { autofocus = "autofocus", placeholder = "What needs to be done?" })
+        <button type="submit" class="add_button">Add</button>
+    }
+</div>
+
+<ul class="todo-list">
+    @{
+        foreach (var item in Model.ToDoList)
+        {
+            <li class="@(@item.Status == 1 ? "completed" : "")">
+                <div>
+                    <a href="@Url.Action("Update", new { Id = item.Id })" style="text-decoration-line: none;">
+                        <label>
+                            @item.ToDoDescription
+                        </label>
+                    </a>
+                    <a href="@Url.Action("Delete", new { Id = item.Id })" class="destroy_button" style="text-decoration-line: none;"></a>
+                </div>
+            </li>
+        }
+    }
+</ul>
+
+<div class="footer">
+    <span class="todo-count">
+        <strong>@Model.ActiveCount</strong> item left
+    </span>
+    <ul class="filters">
+        <li>
+            <a href="@Url.Action("Index", new { status = -1 })" class="@(status == -1 ? "selected" : "")">All</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", new { status = 0 })" class="@(status == 0 ? "selected" : "")">Active</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", new { status = 1 })" class="@(status == 1 ? "selected" : "")">Completed</a>
+        </li>
+    </ul>
+    <button class="clear-completed" onclick="location.href='@Url.Action("ClearComplete")'">Clear completed</button>
+</div>

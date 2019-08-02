@@ -1,0 +1,136 @@
+﻿@model TodoMVC.Web.ViewModels.ToDoMvcViewModel
+@{
+    ViewBag.Title = "Index";
+    var _status = -1;
+}
+
+
+<div class="header">
+    <h2>My To Do List</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+
+        @Html.TextBoxFor(model => model.Description, new { autofocus = "autofocus", placeholder = "What needs to be done?", @class = "description" })
+        <button type="submit" onclick="Create()" class="add_button">Add</button>
+    }
+</div>
+
+<ul class="todo-list">
+</ul>
+
+<div class="footer">
+    <span class="todo-count">
+
+    </span>
+    <ul class="filters">
+        <li>
+            <a onclick="LoadData(-1)" class="selected">All</a>
+        </li>
+        <li>
+            <a onclick="LoadData(0)" class="">Active</a>
+        </li>
+        <li>
+            <a onclick="LoadData(1)" class="">Completed</a>
+        </li>
+    </ul>
+    <button class="clear-completed" onclick="ClearComplete()">Clear completed</button>
+</div>
+<script>
+    $(document).ready(function () {
+        LoadData(_status);
+        $('ul li a').click(function () {
+            $('ul li a').removeClass('selected');
+            $(this).addClass('selected');
+
+        });
+    });
+    function Create() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Add")',
+            data: { description: $(".description").val() },
+            cache: false,
+            async: false,
+            dataType: 'json',
+            success: function () {
+                    
+            }
+        });
+    }
+    function Update(Id) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Update")',
+            data: { Id: Id },
+            cache: false,
+            async: false,
+            dataType: 'json',
+            success: function () {
+                LoadData(_status);
+            }
+        });
+    }
+    function Delete(Id) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Delete")',
+            data: { Id: Id },
+            cache: false,
+            async: false,
+            dataType: 'json',
+            success: function () {
+                LoadData(_status);
+            }
+        });
+    }
+    function ClearComplete(Id) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ClearComplete")',
+            cache: false,
+            async: false,
+            dataType: 'json',
+            success: function () {
+                LoadData(_status);
+            }
+        });
+    }
+    function GetActiveCount() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetActiveCount")',
+            dataType: "json",
+            success: function (result) {
+                $('.todo-count').html('<strong> ' + result + '</strong> item left');
+            }
+        });
+    }
+    function LoadData(status) {
+        _status = status;
+        GetActiveCount();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetList")',
+            data: { status: status },
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+                $.each(result.ToDoList, function (key, item) {
+                    html += '<li class="' + (item.Status == 1 ? "completed" : "") + '">';
+                    html += '<div>';
+                    html += '<a onclick="Update(' + item.Id + ')" style="text-decoration-line: none;">';
+                    html += '<label>';
+                    html += item.ToDoDescription;
+                    html += '</label>';
+                    html += '</a>';
+                    html += '<a onclick="Delete(' + item.Id + ')"class ="destroy_button" style="text-decoration-line: none;"></a>';
+                    html += '</div>';
+                    html += '</li>';
+                });
+                $('.todo-list').html(html);
+            }
+        });
+    }
+</script>

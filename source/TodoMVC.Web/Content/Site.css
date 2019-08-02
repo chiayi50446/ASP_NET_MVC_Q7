@@ -1,0 +1,239 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 100%;
+    vertical-align: baseline;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Remove margins and padding from the list */
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.todo-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    /* Style the list items */
+ul li {
+    cursor: pointer;
+    position: relative;
+    font-size: 18px;
+    transition: 0.2s;
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.todo-list li label {
+    word-break: break-all;
+    padding: 15px 15px 15px 45px;
+    background: #CFFDAF;
+    display: block;
+    line-height: 1.2;
+    transition: color 0.4s;
+    color: #006400;
+}
+
+.todo-list li.completed label {
+    color: #8B0000;
+    text-decoration: line-through;
+    background: #FFB6C1;
+}
+
+.todo-list li.completed label::before {
+    content: '';
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+}
+/* Style the close button */
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Style the header */
+.header {
+    background-color: #ADD8E6;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+}
+
+.footer {
+    color: #777;
+    padding: 10px 15px;
+    height: 20px;
+    text-align: center;
+    border-top: 1px solid #e6e6e6;
+}
+
+.filters {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    right: 0;
+    left: 0;
+}
+
+.filters li {
+	display: inline;
+}
+
+.filters li a {
+	color: inherit;
+	margin: 3px;
+	padding: 3px 7px;
+	text-decoration: none;
+	border: 1px solid transparent;
+	border-radius: 3px;
+}
+
+.filters li a.selected {
+	border-color: rgba(175, 47, 47, 0.2);
+}
+
+.clear-completed {
+    float: right;
+    position: relative;
+    line-height: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: large;
+}
+
+.todo-count {
+	float: left;
+	text-align: left;
+}
+
+.todo-count strong {
+	font-weight: 300;
+}
+
+.clear-completed:hover {
+	text-decoration: underline;
+}
+
+    /* Clear floats after the header */
+.header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the input */
+input {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+}
+
+/* Style the "Add" button */
+.addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+}
+
+.addBtn:hover {
+    background-color: #bbb;
+}
+
+.add_button {
+    background: #3d566e;
+    border: 0px;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 10px 30px;
+    border-radius: 3px;
+    margin: 0px 5px;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+.todo-list li .destroy_button {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    margin: auto 0;
+    font-size: 30px;
+    color: #cc9a9a;
+    transition: color 0.2s ease-out;
+    background: none;
+    border: 0;
+}
+
+.todo-list li .destroy_button:hover {
+    color: #af5b5e;
+}
+
+.todo-list li .destroy_button:after {
+    content: '×';
+}
+
+.todo-list li:hover .destroy_button {
+    display: block;
+}
